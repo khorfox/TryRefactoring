@@ -1,0 +1,48 @@
+package com.telecomitalia.dynamic.omc.gestoreNsnUmts;
+
+import com.telecomitalia.dynamic.omc.Gestore;
+import com.telecomitalia.dynamic.omc.GestoreInterface;
+
+// Estrae, dal managedObjet CELL, i campi necessari
+public class GestoreADJS extends Gestore implements GestoreInterface {
+
+	static final String NOME_FILE = "NSN_UMTS/ADJS.csv";
+	public final static String CHIAVE = "ADJS";
+	public String name;
+
+	public GestoreADJS(String nome, String path) {
+		super();
+		nomeFileOmc = nome;
+		inizializza(path);
+		// Inserisce la prima riga di intestazione
+		output.println("version"+";"+"distName"+";"+"id"+";"
+		+"name"+";"
+		+"NOMEFILE_OMC");
+	}
+
+	@Override
+	public String getNomeFile() {
+		return NOME_FILE;
+	}
+
+	@Override
+	public void load() {
+		super.load();
+		name = estraiCampo("\"name\"");
+		output.println(generaRiga());
+	}
+
+	private String generaRiga() {
+		return version+";"+distName+";"+id+";"
+		+name+";"
+		+nomeFileOmc;
+	}
+	
+	
+	@Override
+	public String toString() {
+		return "GestoreBTSNE [name=" + name + ", version=" + version
+				+ ", distName=" + distName + ", id=" + id + "]";
+	}
+
+}
